@@ -63,9 +63,62 @@ webhook-service/
 - **Controle de Duplicação**: Previne processamento múltiplo da mesma transação
 - **Tratamento de Erros**: Responses seguros sem exposição de informações internas
 
+### Instalação
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/ykarodeandrade/programacao_funcional_projeto3.git
+```
+
+2. Instale as dependências:
+
+```bash
+pip install fastapi uvicorn requests
+```
+
+## Como Executar
+
+### 1. Iniciar o Serviço
+
+```bash
+python3 main.py
+```
+
+O serviço estará disponível em: `http://localhost:5000`
+
+### 2. Executar os Testes
+
+Em outro terminal, execute o script de teste:
+
+```bash
+python3 test_webhook.py
+```
+
+### 3. Verificar Saúde do Serviço
+
+```bash
+curl http://localhost:5000/health
+```
+
+## API Reference
+
+### POST /webhook
+
+Endpoint principal para receber notificações de pagamento.
+
+**Responses:**
+
+- `200`: Transação processada com sucesso
+- `400`: Dados inválidos ou transação duplicada
+- `401`: Token de autenticação inválido
+- `500`: Erro interno do servidor
+
 ![Imagem 1](images/image1.png)
 
 ![Imagem 2](images/image2.png)
+
+![Imagem 3](images/image3.png)
 
 >
 
@@ -73,4 +126,8 @@ webhook-service/
 
 - A linha 6/6 tests completed confirma que o serviço atendeu a todos os requisitos funcionais avaliados, que incluem:Processamento de Sucesso: Aceitar uma transação válida, registrando a Confirmação recebida.
 
-- Controle de Idempotência: Rejeitar uma transação com transaction_id já processado.Validação de Dados: Rejeitar transações com valores monetários inválidos ou campos obrigatórios ausentes, registrando o Cancelamento recebido.Segurança: Bloquear requisições com token de autenticação (X-Webhook-Token) inválido ou payload malformado.As listas finais Confirmações recebidas e Cancelamentos recebidos demonstram que os callbacks para os sistemas externos foram acionados corretamente de acordo com a lógica de negócio de cada cenário.
+- Controle de Idempotência: Rejeitar uma transação com transaction_id já processado.Validação de Dados: Rejeitar transações com valores monetários inválidos ou campos obrigatórios ausentes, registrando o Cancelamento recebido.
+
+- Segurança: Bloquear requisições com token de autenticação (X-Webhook-Token) inválido ou payload malformado.
+
+- Confirmações recebidas e Cancelamentos recebidos demonstram que os callbacks para os sistemas externos foram acionados corretamente de acordo com a lógica de negócio de cada cenário.
